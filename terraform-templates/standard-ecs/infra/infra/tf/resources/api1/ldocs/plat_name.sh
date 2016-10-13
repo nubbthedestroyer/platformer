@@ -1,0 +1,1 @@
+echo "plat_name='TemplateECS'" > /etc/plat_name.sh

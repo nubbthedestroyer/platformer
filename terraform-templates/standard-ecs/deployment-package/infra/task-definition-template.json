@@ -1,0 +1,32 @@
+{
+  "containerDefinitions": [{
+    "name": "platname-mservice-thisenv",
+    "image": "ecrhost/platname-mservice-thisenv:latest",
+    "cpu": 4,
+    "memoryReservation": 2048,
+    "memory": 7000,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": thisport,
+        "hostPort": thisport,
+        "protocol": "tcp"
+      }
+    ],
+    "mountPoints": [
+      {
+        "containerPath": "/var/log/",
+        "sourceVolume": "webdata"
+      }
+    ]
+  }],
+  "volumes": [
+    {
+      "name": "webdata",
+      "host": {
+        "sourcePath": "/ecs/webdata/mservice/"
+      }
+    }
+  ],
+  "family": "platname-mservice-thisenv"
+}

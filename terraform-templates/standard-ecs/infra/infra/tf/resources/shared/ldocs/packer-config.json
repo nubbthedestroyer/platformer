@@ -1,0 +1,26 @@
+{
+    "builders": [
+        {
+            "ami_name": "shared-{{timestamp}}",
+            "associate_public_ip_address": true,
+            "iam_instance_profile": "packer",
+            "instance_type": "c4.4xlarge",
+            "region": "us-east-1",
+            "source_ami": "ami-fce3c696",
+            "ssh_username": "ubuntu",
+            "subnet_id": "subnet-a66763d0",
+            "type": "amazon-ebs",
+            "vpc_id": "vpc-b42987d3"
+        }
+    ],
+    "provisioners": [
+        {
+            "execute_command": "echo '' | sudo -S su - root -c '{{ .Path }}'",
+            "scripts": [
+                "plat_name.sh",
+                "prebake.sh"
+            ],
+            "type": "shell"
+        }
+    ]
+}
