@@ -63,8 +63,7 @@ function waitforapt () {
 #### Cloudmon Provisioning ####
 ###############################
 function cloudmoninstall () {
-    ( namespace="${plat_name^^}/EC2"
-    mkdir -p /etc/scripts
+    (mkdir -p /etc/scripts
     cd /etc/scripts/
     curl http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip -O
     unzip CloudWatchMonitoringScripts-1.2.1.zip
@@ -74,9 +73,9 @@ function cloudmoninstall () {
     chmod +x /etc/scripts/*.pl
     chmod +x /etc/scripts/*.pm
     crontab -l > crontabbackup
-    job1="*/1 * * * * /etc/scripts/mon-put-instance-data.pl --mem-util --mem-used --mem-avail --aws-namespace=${namespace} --auto-scaling=only"
+    job1="*/1 * * * * /etc/scripts/mon-put-instance-data.pl --mem-util --mem-used --mem-avail --auto-scaling=only"
     cat <(fgrep -i -v "${job1}" <(crontab -l)) <(echo "$job1") | crontab -
-    job2="*/1 * * * * /etc/scripts/mon-put-instance-data.pl --disk-space-util --disk-path=/ --aws-namespace=${namespace} --auto-scaling=only"
+    job2="*/1 * * * * /etc/scripts/mon-put-instance-data.pl --disk-space-util --disk-path=/ --auto-scaling=only"
     cat <(fgrep -i -v "${job2}" <(crontab -l)) <(echo "$job2") | crontab -
     cd) 2>&1 | tee -a /var/log/cloud-init-output-cloudmon.log
 }
